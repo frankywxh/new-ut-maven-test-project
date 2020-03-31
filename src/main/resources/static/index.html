@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Websocket</title>
+</head>
+<body>
+This is a test page.
+<button type="submit" onclick="callBackend()">Call backend</button>
+<p id="response"></p>
+</body>
+</html>
+
+
+<script>
+    function callBackend() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // alert(this.responseText);
+                var response = document.getElementById('response');
+                var p = document.createElement('p');
+                p.style.wordWrap = 'break-word';
+                p.appendChild(document.createTextNode(this.responseText));
+                response.appendChild(p);
+            }
+        };
+        xhttp.open("GET", "/websocket/message", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send();
+    }
+</script>
