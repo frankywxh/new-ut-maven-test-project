@@ -16,7 +16,11 @@ pipeline {
             }
         }
 
-        stage('Unit Testing'){
+        stage('sonar'){
+
+            environment {
+                scannerHome = tool 'franktest'
+            }
 
             steps {
                 echo "start SonarQubeEnv testing"
