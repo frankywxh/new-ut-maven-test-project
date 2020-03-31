@@ -26,7 +26,7 @@ pipeline {
                 echo "start SonarQubeEnv testing"
 
                     withSonarQubeEnv('franktest') {
-                    sh '-Dproject.settings=custom_config/sonar-scanner.properties'
+                    sh '${scannerHome}/bin/sonar-scanner -Dproject.settings=custom_config/sonar-scanner.properties'
                 }
             }
         }
