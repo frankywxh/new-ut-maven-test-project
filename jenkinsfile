@@ -22,7 +22,7 @@ pipeline {
                 echo "start SonarQubeEnv testing"
 
                     withSonarQubeEnv('franktest') {
-                    sh '-Dsonar.projectKey=websocket -Dsonar.host.url=http://104.46.237.45:9001 -Dsonar.login=2228ce3b2183b3b81ce79820549acbdf8a1de7ea'
+                    sh ' -Dsonar.host.url=http://104.46.237.45:9001 -Dsonar.login=2228ce3b2183b3b81ce79820549acbdf8a1de7ea'
                 }
             }
         }
