@@ -17,7 +17,7 @@ pipeline {
         stage('Build'){
             steps {
                 sh 'mvn clean package'
-                sh "docker build -t frank/websocket ."
+                sh "docker build -t frank/websocket /var/jenkins_home/workspace/pipelinejob-test/Dockerfile"
             }
 
             post {
