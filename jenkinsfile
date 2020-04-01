@@ -28,6 +28,10 @@ pipeline {
                     withSonarQubeEnv('franktest') {
                     sh '${scannerHome}/bin/sonar-scanner -Dproject.settings=custom_config/sonar-scanner.properties'
                 }
+
+                    timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+              }
             }
         }
     }
