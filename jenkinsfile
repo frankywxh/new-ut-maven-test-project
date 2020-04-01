@@ -5,10 +5,21 @@ pipeline {
     }
     
     stages{
+         stage('init') {
+            steps {
+                script{
+                    def dockerPath = tool 'franktest' //全局配置里的docker
+                    env.PATH = "${dockerPath}/bin:${env.PATH}" //添加了系统环境变量上
+                }
+            }
+        }
+
         stage('Build'){
             steps {
                 sh 'mvn clean package'
+                sh "docker --version"
             }
+
             post {
                 success {
                     echo '开始存档....'
@@ -32,6 +43,10 @@ pipeline {
                     timeout(time: 2, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
               }
+
+              
+
+
             }
         }
     }
