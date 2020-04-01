@@ -17,7 +17,7 @@ pipeline {
         stage('Build'){
             steps {
                 sh 'mvn clean package'
-                sh "docker build -f Dockerfile -t frankwebsocket:${env.BUILD_ID}"
+                sh "docker build -f /src/main/docker/Dockerfile -t frankwebsocket:${env.BUILD_ID} ."
             }
 
             post {
