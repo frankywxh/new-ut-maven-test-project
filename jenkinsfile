@@ -17,7 +17,7 @@ pipeline {
         stage('Build'){
             steps {
                 sh 'mvn clean package'
-                sh "docker --version"
+                sh "docker build -t frank/websocket ."
             }
 
             post {
