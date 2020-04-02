@@ -17,7 +17,7 @@ pipeline {
         stage('Build'){
             steps {
                 sh 'mvn clean package'
-                sh "docker build -f https://github.com/frankywxh/new-ut-maven-test-project.git/src/main/docker/Dockerfile -t frankwebsocket:${env.BUILD_ID} ."
+                sh "docker build -f Dockerfile -t frankwebsocket:${env.BUILD_ID} ."
             }
 
             post {
