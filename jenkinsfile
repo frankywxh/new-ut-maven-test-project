@@ -39,12 +39,7 @@ pipeline {
                     waitForQualityGate abortPipeline: true
               }
 
-                build {
-                    job:"webhook-trigger"
-
-                }
-
-              
+                build job:"webhook-trigger"
 
 
             }
