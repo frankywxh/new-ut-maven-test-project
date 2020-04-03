@@ -35,9 +35,14 @@ pipeline {
                     sh '${scannerHome}/bin/sonar-scanner -Dproject.settings=sonar-scanner.properties'
                 }
 
-                    timeout(time: 2, unit: 'MINUTES') {
+                    timeout(time: 1, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
               }
+
+                build{
+                    job:"webhook-trigger",
+                    
+                }
 
               
 
