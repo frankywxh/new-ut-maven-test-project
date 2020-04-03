@@ -18,7 +18,7 @@ pipeline {
             steps {
                 sh 'mvn clean package'
                 sh 'docker -H 104.46.237.45 version'
-                sh "docker build -f /var/jenkins_home/workspace/pipelinejob-test/Dockerfile -t frankwebsocket:${env.BUILD_ID} ."
+                sh "docker build -f Dockerfile -t frankwebsocket:${env.BUILD_ID} ."
             }
 
             post {
