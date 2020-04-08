@@ -12,7 +12,7 @@ pipeline {
                 sh 'mvn clean package'
                 sh 'docker version'
                 sh 'cd /var/jenkins_home/workspace/pipelinejob-test'
-                sh "docker build -f Dockerfile -t frankwebsocket:v1."
+                sh "docker build -f Dockerfile -t frankwebsocket:v1"
                 sh 'docker run --name websockerproject -p 8083:8080 -d frankwebsocket:v1'
             }
 
