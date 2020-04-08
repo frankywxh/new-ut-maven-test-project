@@ -13,8 +13,7 @@ pipeline {
                 sh 'docker version'
                 sh 'cd /var/jenkins_home/workspace/pipelinejob-test'
                 sh 'docker images'
-                sh "docker build -f Dockerfile -t frankwebsocket"
-                sh 'docker run --name websockerproject -p 8083:8080 -d frankwebsocket'
+                sh 'docker rmi  -f frankwebsocket'
             }
 
             post {
