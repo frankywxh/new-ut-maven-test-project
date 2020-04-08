@@ -12,15 +12,8 @@ pipeline {
                 sh 'mvn clean package'
                 sh 'docker version'
                 sh 'cd /var/jenkins_home/workspace/pipelinejob-test'
-                sh 'docker images'
-                sh 'docker rmi  -f 88dd01dc9909'
-                sh 'docker rmi  -f 6da01a7a25e1'
-                sh 'docker rmi  -f 3f8e8fb6dd4f'
-                sh 'docker rmi  -f 310413c0e212'
-                sh 'docker rmi  -f b270186b764e'
-                sh 'docker rmi  -f 0839bbf9ba18'
-                sh 'docker rmi  -f b251651a8a79'
-                sh 'docker rmi  -f 5a7fab2c0f3c'
+                sh "docker build -f Dockerfile -t frankwebsocket ."
+                sh 'docker run --name websockerproject -p 8083:8080 -d frankwebsocket'
             }
 
             post {
