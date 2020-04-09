@@ -11,8 +11,8 @@ pipeline {
             steps {
                 sh 'mvn clean package'
                 sh 'docker version'
-                //sh 'cd /var/jenkins_home/workspace/pipelinejob-test'
-                //sh "docker build -f Dockerfile -t frankwebsocket ."
+                sh 'cd /var/jenkins_home/workspace/pipelinejob-test'
+                sh "docker build -f Dockerfile -t frankwebsocket ."
                 //sh 'docker run --name websockerproject -p 8083:8080 -d frankwebsocket'
             }
 
@@ -50,13 +50,20 @@ pipeline {
                 }
             }
         }
-        stage('Jmeter') {
+
+
+        stage('Trigger'){
+            steps {
+                build job:"webhook-trigger"
+            }
+                
+        /*stage('Jmeter') {
             steps {
                 sh 'sudo pip install bzt'
                 sh 'sudo pip install virtualenv'
                 bzt params: 'pipeinejob-test-config.yml'
             }
-        }
+        }*/
     }
 }
 

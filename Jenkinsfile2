@@ -7,41 +7,15 @@ pipeline {
     stages{
         
 
-        stage('Build'){
+        stage('Deploy'){
             steps {
-                sh 'mvn clean package'
-                sh 'cd /var/jenkins_home/workspace/pipelinejob-test'
-                sh "docker build -f Dockerfile -t frankwebsocket:${env.BUILD_ID} ."
-                sh 'docker run --name websockerproject -p 8083:8080 -d frankwebsocket:${env.BUILD_ID}'
+                sh 'docker run --name websockerproject -p 8083:8080 -d frankwebsocket'
             }
 
             post {
                 success {
-                    echo '开始存档....'
+                    echo '正在构建'
                 }
-            }
-        }
-
-        stage('sonar'){
-
-            environment {
-                scannerHome = tool 'franktest'
-            }
-
-            steps {
-                echo "start SonarQubeEnv testing"
-
-                    withSonarQubeEnv('franktest') {
-                    sh '${scannerHome}/bin/sonar-scanner -Dproject.settings=sonar-scanner.properties'
-                }
-
-                    timeout(time: 1, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-              }
-
-                build job:"webhook-trigger"
-
-
             }
         }
     }
