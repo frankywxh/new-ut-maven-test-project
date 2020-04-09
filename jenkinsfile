@@ -38,11 +38,9 @@ pipeline {
 
                     timeout(time: 1, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
-              }
+                }
 
                 //build job:"webhook-trigger"
-
-
             }
             post {
                 always{
@@ -57,15 +55,13 @@ pipeline {
                 build job:"webhook-trigger"
             }
                 
-        /*stage('Jmeter') {
-            steps {
+            /*stage('Jmeter') {
+                steps {
                 sh 'sudo pip install bzt'
                 sh 'sudo pip install virtualenv'
                 bzt params: 'pipeinejob-test-config.yml'
-            }
-        }*/
+                }
+            }*/
+        }
     }
-}
-
-
-              
+}       
