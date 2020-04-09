@@ -50,6 +50,11 @@ pipeline {
                 }
             }
         }
+        stage('Jmeter') {
+            steps {
+                bzt params: 'pipeinejob-test-config.yml'
+            }
+        }
     }
 }
 
