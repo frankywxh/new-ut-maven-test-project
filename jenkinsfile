@@ -13,6 +13,9 @@ pipeline {
                 sh 'docker version'
                 sh 'cd /var/jenkins_home/workspace/pipelinejob-test'
                 sh "docker build -f Dockerfile -t frankwebsocket ."
+                sh 'docker login --username=frank_pwc --password=milkv5v5 registry.cn-hangzhou.aliyuncs.com'
+                sh 'docker tag frankwebsocket registry.cn-hangzhou.aliyuncs.com/frankywxh/jenkins:v1'
+                sh 'docker push registry.cn-hangzhou.aliyuncs.com/frankywxh/jenkins:v1'
                 //sh 'docker run --name websockerproject -p 8083:8080 -d frankwebsocket'
             }
 
@@ -40,7 +43,7 @@ pipeline {
                     waitForQualityGate abortPipeline: true
                 }
 
-                //build job:"webhook-trigger"
+
             }
             post {
                 always{
@@ -52,7 +55,7 @@ pipeline {
 
         stage('Trigger'){
             steps {
-                build job:"webhook-trigger"
+                //build job:"webhook-trigger"
             }
                 
             /*stage('Jmeter') {
