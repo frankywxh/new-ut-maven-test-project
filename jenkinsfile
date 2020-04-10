@@ -10,15 +10,12 @@ pipeline {
         stage('Build'){
             steps {
                 sh 'mvn clean package'
-                sh 'docker version'
-                sh 'pwd'
-                //sh 'cd $WORKSPACE/src/main/docker'
                 sh 'docker rm -f websockerproject'
                 sh "docker build -f src/main/docker/Dockerfile -t frankwebsocket ."
                 sh 'docker login --username=frank_pwc --password=milkv5v5 registry.cn-hangzhou.aliyuncs.com'
                 sh 'docker tag frankwebsocket registry.cn-hangzhou.aliyuncs.com/frankywxh/jenkins:v1'
                 sh 'docker push registry.cn-hangzhou.aliyuncs.com/frankywxh/jenkins:v1'
-                sh 'docker run --name websockerproject -p 8083:8080 -d frankwebsocket'
+                //sh 'docker run --name websockerproject -p 8083:8080 -d frankwebsocket'
             }
 
             post {
@@ -55,12 +52,12 @@ pipeline {
         }
 
 
-        /*stage('Trigger'){
+        stage('Trigger'){
             steps {
                 build job:"webhook-trigger"
             }
                 
-            stage('Jmeter') {
+            /*stage('Jmeter') {
                 steps {
                 sh 'sudo pip install bzt'
                 sh 'sudo pip install virtualenv'
