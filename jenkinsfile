@@ -48,7 +48,7 @@ pipeline {
             }
             post {
                 always{
-                    junit allowEmptyResults: true, testResults: '**/pipelinejob-test/*.xml'
+                    junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
                 }
             }
         }
