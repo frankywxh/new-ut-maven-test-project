@@ -12,7 +12,7 @@ pipeline {
                 sh 'mvn clean package'
                 sh 'docker version'
                 sh 'pwd'
-                sh 'cd {$WORKSPACE}/src/main/docker'
+                sh 'cd $WORKSPACE/src/main/docker'
                 sh "docker build -f Dockerfile -t frankwebsocket ."
                 sh 'docker login --username=frank_pwc --password=milkv5v5 registry.cn-hangzhou.aliyuncs.com'
                 sh 'docker tag frankwebsocket registry.cn-hangzhou.aliyuncs.com/frankywxh/jenkins:v1'
