@@ -53,18 +53,18 @@ pipeline {
         }
 
 
-        stage('Trigger'){
+        /*stage('Trigger'){
             steps {
-                //build job:"webhook-trigger"
+                build job:"webhook-trigger"
             }
                 
-            /*stage('Jmeter') {
+            stage('Jmeter') {
                 steps {
                 sh 'sudo pip install bzt'
                 sh 'sudo pip install virtualenv'
                 bzt params: 'pipeinejob-test-config.yml'
                 }
-            }*/
-        }
+            }
+        }*/
     }
 }       
