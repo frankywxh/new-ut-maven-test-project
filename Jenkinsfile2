@@ -25,7 +25,7 @@ pipeline {
         stage('Jmeter') { 
             steps {
                 sh "mkdir -p /opt/workspace/Jmeter/output"  
-                sh "jmeter.sh -n -t src/main/Jmeter/franktest.jmx  -l /opt/workspace/Jmeter/demo.jtl -j /opt/workspace/Jmeter/demo.log -e -o /opt/workspace/Jmeter/output"
+                sh "jmeter -n -t src/main/Jmeter/franktest.jmx  -l /opt/workspace/Jmeter/demo.jtl -j /opt/workspace/Jmeter/demo.log -e -o /opt/workspace/Jmeter/output"
                 step([$class: 'ArtifactArchiver', artifacts: 'jmeter/*,jmeter/output/*'])   
                 perfReport "jmeter/frank.jtl"
             }
