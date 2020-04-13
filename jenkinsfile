@@ -15,7 +15,7 @@ pipeline {
                 sh 'docker login --username=frank_pwc --password=milkv5v5 registry.cn-hangzhou.aliyuncs.com'
                 sh 'docker tag frankwebsocket registry.cn-hangzhou.aliyuncs.com/frankywxh/jenkins:v1'
                 sh 'docker push registry.cn-hangzhou.aliyuncs.com/frankywxh/jenkins:v1'
-                //sh 'docker run --name websockerproject -p 8083:8080 -d frankwebsocket'
+                sh 'docker run --name websockerproject -p 8083:8080 -d frankwebsocket'
             }
 
             post {
@@ -52,10 +52,10 @@ pipeline {
         }
 
 
-        stage('Trigger'){
+        /*stage('Trigger'){
             steps {
                 build job:"webhook-trigger"
-            }
+            }*/
                 
             /*stage('Jmeter') {
                 steps {
@@ -66,16 +66,16 @@ pipeline {
             }*/
         }
 
-        stage('Jmeter') { 
-            agent { node { label 'jmeter' } }
-            steps {
+        //stage('Jmeter') { 
+            //agent { node { label 'jmeter' } }
+            //steps {
                 //sh "rm -rf  /opt/workspace/Jmeter/*"    //上次掉目标的目录，如果后续执行命令输出文件时，文件继续存在将报错，无法生成文件
                 //checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'binbin', url: 'https://github.com/zbbkeepgoing/springboot-demo.git']]])   //拉取最新代码，因为脚本在我们的repo中
-                sh "mkdir -p /opt/workspace/Jmeter/output"   //创建Jmeter产生的输出目录
-                sh "jmeter.sh -n -t src/main/Jmeter/franktest.jmx  -l /opt/workspace/Jmeter/demo.jtl -j /opt/workspace/Jmeter/demo.log -e -o /opt/workspace/Jmeter/output"    //执行性能测试的命令行
-                step([$class: 'ArtifactArchiver', artifacts: 'jmeter/*,jmeter/output/*'])    //将Jmeter生成的文件都进行归档，直接提供在Jenkins Build后的页面查看
-                perfReport "jmeter/frank.jtl"    //生成Jmeter的报告(该报告是Jenkins通过performance插件进行分析出来的结果。Jmeter自身的报告还需要看output中的文件)
-            }
-        }
+               // sh "mkdir -p /opt/workspace/Jmeter/output"   //创建Jmeter产生的输出目录
+                //sh "jmeter.sh -n -t src/main/Jmeter/franktest.jmx  -l /opt/workspace/Jmeter/demo.jtl -j /opt/workspace/Jmeter/demo.log -e -o /opt/workspace/Jmeter/output"    //执行性能测试的命令行
+                //step([$class: 'ArtifactArchiver', artifacts: 'jmeter/*,jmeter/output/*'])    //将Jmeter生成的文件都进行归档，直接提供在Jenkins Build后的页面查看
+                //perfReport "jmeter/frank.jtl"    //生成Jmeter的报告(该报告是Jenkins通过performance插件进行分析出来的结果。Jmeter自身的报告还需要看output中的文件)
+            //}
+        //}
     }
 }       
