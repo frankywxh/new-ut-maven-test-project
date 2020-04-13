@@ -63,7 +63,7 @@ pipeline {
                 sh 'sudo pip install virtualenv'
                 bzt params: 'pipeinejob-test-config.yml'
                 }
-            }
-        }*/
+            }*/
+        }
     }
 }       
