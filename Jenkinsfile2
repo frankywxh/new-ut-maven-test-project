@@ -25,7 +25,7 @@ pipeline {
         stage('Jmeter') { 
             steps {
                 sh "mkdir -p /var/jenkins_home/workspace/webhook-trigger/Jmeter/output"  
-                sh "jmeter -n -t src/main/Jmeter/franktest.jmx  -l /opt/workspace/Jmeter/demo.jtl -j /opt/workspace/Jmeter/demo.log -e -o /var/jenkins_home/workspace/webhook-trigger/Jmeter/output"
+                sh "jmeter -Jjmeter.save.saveservice.output_format=xml -n -t src/main/Jmeter/franktest.jmx  -l src/main/Jmeter/franktest.jtl"
                 step([$class: 'ArtifactArchiver', artifacts: 'jmeter/*,jmeter/output/*'])   
                 perfReport "jmeter/frank.jtl"
             }
