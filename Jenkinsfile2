@@ -26,7 +26,7 @@ pipeline {
             steps {
                 sh "mkdir -p /var/jenkins_home/workspace/webhook-trigger/Jmeter/output"
                 sh 'pwd'
-                sh 'jmeter -n -t src/main/Jmeter/franktest.jmx  -l src/main/Jmeter/frank.jtl -e -o 123/report'
+                sh 'jmeter -n -t src/main/Jmeter/franktest.jmx  -l src/main/Jmeter/frank.jtl'
                 step([$class: 'ArtifactArchiver', artifacts: 'src/main/Jmeter/*'])
                 //sh 'pwd'
                 //perfReport "src/main/Jmeter/frank.jtl"
