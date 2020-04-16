@@ -26,7 +26,7 @@ pipeline {
             steps {
                 sh "mkdir -p /var/jenkins_home/workspace/webhook-trigger/Jmeter/output"
                 sh 'pwd'
-                sh 'jmeter -n -t src/main/Jmeter/franktest.jmx  -l src/main/Jmeter/frank.jtl -e -o output/frank.html'
+                sh 'jmeter -n -t src/main/Jmeter/franktest.jmx  -l src/main/Jmeter/frank.jtl -e -o /var/jenkins_home/workspace/webhook-trigger/output/frank.html'
                 //step([$class: 'ArtifactArchiver', artifacts: 'src/main/Jmeter/*'])
                 sh 'xsltproc src/main/JMeter/jmeter.results.xsl src/main/Jmeter/frank.jtl > src/main/Jmeter/frank.html'
                 //perfReport "src/main/Jmeter/frank.jtl"
