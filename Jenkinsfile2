@@ -28,8 +28,8 @@ pipeline {
                 sh 'pwd'
                 sh 'jmeter -n -t src/main/Jmeter/franktest.jmx  -l src/main/Jmeter/frank.jtl'
                 step([$class: 'ArtifactArchiver', artifacts: 'src/main/Jmeter/*'])
-                //sh 'pwd'
-                perfReport "src/main/Jmeter/frank.jtl"
+                sh 'xsltproc src/main/JMeter/jmeter.results.xsl src/main/Jmeter/frank.jtl > src/main/Jmeter/frank.html'
+                //perfReport "src/main/Jmeter/frank.jtl"
             }
         }
     }
