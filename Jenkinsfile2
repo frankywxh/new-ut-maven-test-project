@@ -26,9 +26,9 @@ pipeline {
             steps {
                 sh 'cd /var/jenkins_home/workspace/webhook-trigger/src/main/Jmeter'
 
-                sh '/opt/apache-jmeter-3.2/bin/jmeter -n -t src/main/Jmeter/franktest.jmx  -l src/main/Jmeter/frank.jtl -e -o src/main/Jmeter/frank.html'
-                step([$class: 'ArtifactArchiver', artifacts: 'src/main/Jmeter/frank.html/*'])
-                sh 'xsltproc src/main/JMeter/jmeter.results.xsl src/main/Jmeter/frank.jtl > src/main/Jmeter/frank.html'
+                sh '/opt/apache-jmeter-3.2/bin/jmeter -n -t src/main/Jmeter/franktest.jmx  -l src/main/Jmeter/frank.jtl -e -o src/main/Jmeter/frank/output'
+                step([$class: 'ArtifactArchiver', artifacts: 'src/main/Jmeter/output/*'])
+                sh 'xsltproc src/main/Jmeter/frank.jtl > src/main/Jmeter/output/frank.html'
                 //perfReport "src/main/Jmeter/frank.jtl"
             }
         }
