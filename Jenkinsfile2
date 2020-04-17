@@ -23,6 +23,7 @@ pipeline {
         }
 
         stage('Jmeter') { 
+            agent { jmeter 'apache-jmeter-3.2'}
             steps {
                 sh "mkdir -p /var/jenkins_home/workspace/webhook-trigger/Jmeter/output"
                 sh 'pwd'
@@ -30,7 +31,7 @@ pipeline {
                 sh 'rm -rf frank.html'
                 sh 'cd /var/jenkins_home/workspace/webhook-trigger/src/main/Jmeter'
                 //sh 'rm frank.jtl'
-                sh 'jmeter -n -t franktest.jmx  -l frank.jtl -e -o /var/jenkins_home/workspace/webhook-trigger/output/frank.html'
+                sh '/opt/apache-jmeter-3.2/bin/jmeter -n -t franktest.jmx  -l frank.jtl -e -o /var/jenkins_home/workspace/webhook-trigger/output/frank.html'
                 //step([$class: 'ArtifactArchiver', artifacts: 'src/main/Jmeter/*'])
                 sh 'xsltproc src/main/JMeter/jmeter.results.xsl src/main/Jmeter/frank.jtl > src/main/Jmeter/frank.html'
                 //perfReport "src/main/Jmeter/frank.jtl"
