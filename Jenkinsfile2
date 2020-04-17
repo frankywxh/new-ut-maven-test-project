@@ -23,7 +23,6 @@ pipeline {
         }
 
         stage('Jmeter') { 
-            agent { jmeter 'apache-jmeter-3.2'}
             steps {
                 sh "mkdir -p /var/jenkins_home/workspace/webhook-trigger/Jmeter/output"
                 sh 'pwd'
