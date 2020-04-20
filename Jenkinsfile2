@@ -17,7 +17,7 @@ pipeline {
 
             post {
                 success {
-                    echo '正在构建'
+                    echo '正在构建!'
                 }
             }
         }
