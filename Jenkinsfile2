@@ -34,17 +34,12 @@ pipeline {
         }*/
 
         stage('BlackDuck') {
-            node('maven') {
-                stage 'Build all the things'
+            steps {
                     openshiftBuild(buildConfig: 'myphp', showBuildLogs: 'true')
-                stage 'Make sure they all built and stuff'
                     openshiftVerifyBuild(buildConfig: 'myphp')
-                stage 'Take a peek and analyze the OSS packages'
-                        hub_scan bomUpdateMaxiumWaitTime: '5', dryRun: false, hubProjectName: 'practicesafedevops', hubProjectVersion: '1.0', hubVersionDist: 'OPENSOURCE', hubVersionPhase: 'DEVELOPMENT', scanMemory: '4096', scans: [[scanTarget: '']], shouldGenerateHubReport: true
-                stage 'Deploy myall the things'
+                    hub_scan bomUpdateMaxiumWaitTime: '5', dryRun: false, hubProjectName: 'practicesafedevops', hubProjectVersion: '1.0', hubVersionDist: 'OPENSOURCE', hubVersionPhase: 'DEVELOPMENT', scanMemory: '4096', scans: [[scanTarget: '']], shouldGenerateHubReport: true
                     openshiftDeploy(deploymentConfig: 'myphp')
-                        openshiftScale(deploymentConfig: 'myphp',replicaCount: '1')
-                stage 'Notify the peoples'
+                    openshiftScale(deploymentConfig: 'myphp',replicaCount: '1')
                     step([$class: 'GitHubCommitStatusSetter'])
                     step([$class: 'GitHubIssueNotifier', useCustomTemplate: false])
             }
