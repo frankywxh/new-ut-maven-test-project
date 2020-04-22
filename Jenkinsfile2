@@ -35,11 +35,11 @@ pipeline {
 
         stage('BlackDuck') {
             steps {
-                    openshiftBuild(buildConfig: 'myphp', showBuildLogs: 'true')
-                    openshiftVerifyBuild(buildConfig: 'myphp')
+                    //openshiftBuild(buildConfig: 'myphp', showBuildLogs: 'true')
+                    //openshiftVerifyBuild(buildConfig: 'myphp')
                     hub_scan bomUpdateMaxiumWaitTime: '5', dryRun: false, hubProjectName: 'practicesafedevops', hubProjectVersion: '1.0', hubVersionDist: 'OPENSOURCE', hubVersionPhase: 'DEVELOPMENT', scanMemory: '4096', scans: [[scanTarget: '']], shouldGenerateHubReport: true
-                    openshiftDeploy(deploymentConfig: 'myphp')
-                    openshiftScale(deploymentConfig: 'myphp',replicaCount: '1')
+                    //openshiftDeploy(deploymentConfig: 'myphp')
+                    //openshiftScale(deploymentConfig: 'myphp',replicaCount: '1')
                     step([$class: 'GitHubCommitStatusSetter'])
                     step([$class: 'GitHubIssueNotifier', useCustomTemplate: false])
             }
