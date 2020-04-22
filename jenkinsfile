@@ -59,14 +59,13 @@ pipeline {
         */
 
         stage('Jmeter') { 
-            //agent { node { label 'jmeter' } }
             steps {
-                sh "rm -rf  /opt/workspace/Jmeter/*"    //上次掉目标的目录，如果后续执行命令输出文件时，文件继续存在将报错，无法生成文件
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'binbin', url: 'https://github.com/zbbkeepgoing/springboot-demo.git']]])   //拉取最新代码，因为脚本在我们的repo中
-                sh "mkdir -p /opt/workspace/Jmeter/output"   //创建Jmeter产生的输出目录
-                sh "jmeter.sh -n -t src/main/Jmeter/franktest.jmx  -l /opt/workspace/Jmeter/demo.jtl -j /opt/workspace/Jmeter/demo.log -e -o /opt/workspace/Jmeter/output"    //执行性能测试的命令行
-                step([$class: 'ArtifactArchiver', artifacts: 'jmeter/*,jmeter/output/*'])    //将Jmeter生成的文件都进行归档，直接提供在Jenkins Build后的页面查看
-                perfReport "jmeter/frank.jtl"    //生成Jmeter的报告(该报告是Jenkins通过performance插件进行分析出来的结果。Jmeter自身的报告还需要看output中的文件)
+                sh 'cd /var/jenkins_home/workspace/webhook-trigger/src/main/Jmeter'
+
+                sh '/opt/apache-jmeter-3.2/bin/jmeter -n -t src/main/Jmeter/franktest.jmx  -l src/main/Jmeter/frank.jtl -e -o src/main/Jmeter/output'
+                //sh 'xsltproc src/main/Jmeter/frank.jtl > src/main/Jmeter/output/frank.html'
+                step([$class: 'ArtifactArchiver', artifacts: 'src/main/Jmeter/output/*'])
+                //perfReport "src/main/Jmeter/frank.jtl"
             }
         }
     }
