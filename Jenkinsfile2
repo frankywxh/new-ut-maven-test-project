@@ -7,7 +7,7 @@ pipeline {
     stages{
         
 
-        stage('Deploy'){
+        /*stage('Deploy'){
             steps {
                 sh 'docker rm -f websockerproject'
                 sh 'docker pull registry.cn-hangzhou.aliyuncs.com/frankywxh/jenkins:v1'
@@ -20,9 +20,9 @@ pipeline {
                     echo '正在构建!'
                 }
             }
-        }
+        }*/
 
-        stage('Jmeter') { 
+        /*stage('Jmeter') { 
             steps {
                 sh 'cd /var/jenkins_home/workspace/webhook-trigger/src/main/Jmeter'
 
@@ -30,6 +30,23 @@ pipeline {
                 //sh 'xsltproc src/main/Jmeter/frank.jtl > src/main/Jmeter/output/frank.html'
                 step([$class: 'ArtifactArchiver', artifacts: 'src/main/Jmeter/output/*'])
                 //perfReport "src/main/Jmeter/frank.jtl"
+            }
+        }*/
+
+        stage('BlackDuck') {
+            node('maven') {
+                stage 'Build all the things'
+                    openshiftBuild(buildConfig: 'myphp', showBuildLogs: 'true')
+                stage 'Make sure they all built and stuff'
+                    openshiftVerifyBuild(buildConfig: 'myphp')
+                stage 'Take a peek and analyze the OSS packages'
+                        hub_scan bomUpdateMaxiumWaitTime: '5', dryRun: false, hubProjectName: 'practicesafedevops', hubProjectVersion: '1.0', hubVersionDist: 'OPENSOURCE', hubVersionPhase: 'DEVELOPMENT', scanMemory: '4096', scans: [[scanTarget: '']], shouldGenerateHubReport: true
+                stage 'Deploy myall the things'
+                    openshiftDeploy(deploymentConfig: 'myphp')
+                        openshiftScale(deploymentConfig: 'myphp',replicaCount: '1')
+                stage 'Notify the peoples'
+                    step([$class: 'GitHubCommitStatusSetter'])
+                    step([$class: 'GitHubIssueNotifier', useCustomTemplate: false])
             }
         }
     }
