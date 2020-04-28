@@ -35,13 +35,8 @@ pipeline {
 
         stage('BlackDuck') {
             steps {
-                    //openshiftBuild(buildConfig: 'myphp', showBuildLogs: 'true')
-                    //openshiftVerifyBuild(buildConfig: 'myphp')
-                    hub_scan bomUpdateMaxiumWaitTime: '5', dryRun: false, hubProjectName: 'practicesafedevops', hubProjectVersion: '1.0', hubVersionDist: 'OPENSOURCE', hubVersionPhase: 'DEVELOPMENT', scanMemory: '4096', scans: [[scanTarget: '']], shouldGenerateHubReport: true
-                    //openshiftDeploy(deploymentConfig: 'myphp')
-                    //openshiftScale(deploymentConfig: 'myphp',replicaCount: '1')
-                    step([$class: 'GitHubCommitStatusSetter'])
-                    step([$class: 'GitHubIssueNotifier', useCustomTemplate: false])
+                    wget https://detect.synopsys.com/detect.sh
+                    bash detect.sh --blackduck.url=https://pwc.blackducksoftware.com --blackduck.api.token=NDJmYzQ1NmUtODI4OS00ZTg5LThiYTEtZDRmZmYxZDJjNmRjOmRjOWY5NGE5LTY2NTItNGUwZS1hNDE1LTAxODkzOWRjMDQ2Mw== --detect.project.name=US-Risk-Command --detect.project.version.name=rc-service-0.0.1-SNAPSHOT
             }
         }
     }
