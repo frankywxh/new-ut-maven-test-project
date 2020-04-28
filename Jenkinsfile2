@@ -35,8 +35,8 @@ pipeline {
 
         stage('BlackDuck') {
             steps {
-                    wget https://detect.synopsys.com/detect.sh
-                    bash detect.sh --blackduck.url=https://pwc.blackducksoftware.com --blackduck.api.token=NDJmYzQ1NmUtODI4OS00ZTg5LThiYTEtZDRmZmYxZDJjNmRjOmRjOWY5NGE5LTY2NTItNGUwZS1hNDE1LTAxODkzOWRjMDQ2Mw== --detect.project.name=US-Risk-Command --detect.project.version.name=rc-service-0.0.1-SNAPSHOT
+                    sh 'wget https://detect.synopsys.com/detect.sh'
+                    sh 'bash detect.sh --blackduck.url=https://pwc.blackducksoftware.com --blackduck.api.token=NDJmYzQ1NmUtODI4OS00ZTg5LThiYTEtZDRmZmYxZDJjNmRjOmRjOWY5NGE5LTY2NTItNGUwZS1hNDE1LTAxODkzOWRjMDQ2Mw== --detect.project.name=US-Risk-Command --detect.project.version.name=rc-service-0.0.1-SNAPSHOT'
             }
         }
     }
